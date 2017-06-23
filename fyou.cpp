@@ -7,6 +7,7 @@
 #include <cctype>
 #include <ctime>
 
+const std::string compiler = "g++";
 long long line = 10000LL;
 std::size_t counter;
 std::ifstream cppfile;
@@ -31,9 +32,19 @@ int main(int argc, char* argv[])
 		{
 			if (i + 1 == argc - 1)
 				fuckingVar();
+			if (!std::all_of(argv[i + 1], argv[i + 1] + std::strlen(argv[i + 1]), isdigit))
+			{
+				std::cout << "FYou++: error: Invalid required line number" << std::endl;
+				fuckingVar();
+			}
 			line = atoll(argv[i + 1]);
 			break;
 		}
+	if (line == 0)
+	{
+		const std::string cmd = compiler + ' ' + argv[argc - 1];
+		return std::system(cmd.data());
+	}
 	cppfile.open(argv[argc - 1]);
 	if (!cppfile.is_open())
 	{
